@@ -17,6 +17,9 @@ const store = {
   findAndUpdate: function(id, updateData){
     const foundItem = this.items.find(item => item.id === id);
     Object.assign(foundItem, updateData);
+    console.log('test foundItem and updateData',updateData);
+    console.log('test store.items after object.assign',store.items);
+    shoppingList.render();
   }
 };
 
@@ -24,7 +27,7 @@ const store = {
 $(document).ready(function() {
   shoppingList.bindEventListeners();
   api.getItems()
-    .then(res => { res.json();} )
+    .then(res =>  res.json())
     .then((items) => {
       items.forEach((item) => store.addItem(item));
       shoppingList.render();

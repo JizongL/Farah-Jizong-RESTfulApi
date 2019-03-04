@@ -56,9 +56,9 @@ const shoppingList = (function(){
   }
   
   
- function addItemToShoppingList(itemName) {
-    store.items.push({ id: cuid(), name: itemName, checked: false });
-  } 
+//  function addItemToShoppingList(itemName) {
+//     store.items.push({ id: cuid(), name: itemName, checked: false });
+//   } 
   
   function handleNewItemSubmit() {
     $('#js-shopping-list-form').submit(function (event) {
@@ -86,15 +86,20 @@ const shoppingList = (function(){
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
       const id = getItemIdFromElement(event.currentTarget);
       const foundItem = store.items.find(item => item.id === id);
+      
+      foundItem.checked =!foundItem.checked;
       const updateData = {
-        checked: !foundItem.checked
+        checked:foundItem.checked
       };
+      console.log('test updateData inside handleItemCheckClicked',updateData);
       api.updateItem(id, updateData)
-        .then(res => res.json())
+        .then(res => {return res.json();})
         .then((updatedItem) => {
-          store.findAndUpdate(updatedItem);
+          //console.log('test inside api.updateItem',updatedItem);
+          store.findAndUpdate(id,updatedItem);
+          render();
         });   
-      render();
+      
     });
   }
   
@@ -103,10 +108,10 @@ const shoppingList = (function(){
     store.items.splice(index, 1);
   }
   
-  function editListItemName(id, itemName) {
-    const item = store.items.find(item => item.id === id);
-    item.name = itemName;
-  }
+  // function editListItemName(id, itemName) {
+  //   const item = store.items.find(item => item.id === id);
+  //   item.name = itemName;
+  // }
   
   function toggleCheckedItemsFilter() {
     store.hideCheckedItems = !store.hideCheckedItems;
@@ -134,7 +139,12 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      editListItemName(id, itemName);
+      api.updateItem(id,{name:itemName})
+        .then(res=> res.json())
+        .then(data => store.findAndUpdate(id,data));
+      
+      
+      //editListItemName(id, itemName);
       render();
     });
   }
