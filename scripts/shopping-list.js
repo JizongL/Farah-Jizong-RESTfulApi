@@ -1,5 +1,5 @@
 'use strict';
-/* global store, cuid, $, api */
+/* global store, cuid, $, api  */
 
 // eslint-disable-next-line no-unused-vars
 const shoppingList = (function(){
@@ -35,6 +35,13 @@ const shoppingList = (function(){
   }
   
   
+
+  function addErrorToStoreAndRender(error){
+    console.log('CCC',error);
+    store.error = error;
+    shoppingList.render();
+  }
+
   function render() {
     // Filter item list if store prop is true by item.checked === false
     let items = [ ...store.items ];
@@ -70,11 +77,14 @@ const shoppingList = (function(){
       const newItemName = $('.js-shopping-list-entry').val();
       $('.js-shopping-list-entry').val('');
       api.createItem(newItemName)
-        .then(res => res.json())
+        //.then(res => res.json())
         .then((newItem) => {
           store.addItem(newItem);
           render();
-        });
+        })
+        .catch(err => {
+          console.log('test BBBB',err.message);
+          addErrorToStoreAndRender(err.message);});
     });
   }
 
@@ -96,12 +106,13 @@ const shoppingList = (function(){
       };
       console.log('test updateData inside handleItemCheckClicked',updateData);
       api.updateItem(id, updateData)
-        .then(res => {return res.json();})
+        //.then(res => {return res.json();})
         .then((updatedItem) => {
           //console.log('test inside api.updateItem',updatedItem);
           store.findAndUpdate(id,updatedItem);
           render();
-        });   
+        })
+        .catch(err => addErrorToStoreAndRender(err.message));
       
     });
   }
@@ -140,7 +151,7 @@ const shoppingList = (function(){
       };
       api.updateItem(id, updateData)
 
-        .then(res=> res.json())
+        //.then(res=> res.json())
         .then(() => {
           
           store.findAndUpdate(id,updateData); 
@@ -174,6 +185,7 @@ const shoppingList = (function(){
     handleEditShoppingItemSubmit();
     handleToggleFilterClick();
     handleShoppingListSearch();
+    addErrorToStoreAndRender();
   }
 
   // This object contains the only exposed methods from this module:

@@ -32,8 +32,8 @@ const api = (function () {
 
   const getItems = function(){
     //return Promise.resolve('A successful response!');
-    return fetch(BASE_URL+'/items');
-    //listApiFetch(BASE_URL+'/items');
+    //return fetch(BASE_URL+'/items');
+    return listApiFetch(BASE_URL+'/items');
   };
 
   const createItem = function(name){
@@ -49,8 +49,8 @@ const api = (function () {
       body: newItem
     };
 
-    return fetch(BASE_URL+'/items', option);
-   // listApiFetch(BASE_URL+'/items',option);
+    //return fetch(BASE_URL+'/items', option);
+   return listApiFetch(BASE_URL+'/items',option);
   };
 
   const updateItem = function(id, updateData){
@@ -61,8 +61,8 @@ const api = (function () {
       }),
       body: JSON.stringify(updateData)
     };
-    return fetch(BASE_URL+`/items/${id}`, option);
-    //listApiFetch(BASE_URL+`/items/${id}`, option);
+    //return fetch(BASE_URL+`/items/${id}`, option);
+    listApiFetch(BASE_URL+`/items/${id}`, option);
   };
 
   const deleteItem = function(id){

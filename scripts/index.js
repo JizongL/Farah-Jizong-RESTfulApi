@@ -37,10 +37,11 @@ function addDataToStoreAndRender(items){
   shoppingList.render();
 }
 
-function addErrorToStoreAndRender(error){
-  store.error = error;
-  shoppingList.render();
-}
+// function addErrorToStoreAndRender(error){
+//   console.log('CCC',error);
+//   store.error = error;
+//   shoppingList.render();
+// }
 
 $(document).ready(function() {
   shoppingList.bindEventListeners();
@@ -48,6 +49,8 @@ $(document).ready(function() {
     
     
     .then(data => addDataToStoreAndRender(data))
-    .catch(err => addErrorToStoreAndRender(err.message));
+    .catch(err => {
+      console.log('test adddatatostoreandrender',err.message);
+      store.addErrorToStoreAndRender(err.message);});
   
 });
