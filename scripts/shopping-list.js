@@ -74,12 +74,7 @@ const shoppingList = (function(){
         });
     });
   }
-  
-  function toggleCheckedForListItem(id) {
-    const foundItem = store.items.find(item => item.id === id);
-    foundItem.checked = !foundItem.checked;
-  }
-  
+
   
   function getItemIdFromElement(item) {
     return $(item)
@@ -90,7 +85,15 @@ const shoppingList = (function(){
   function handleItemCheckClicked() {
     $('.js-shopping-list').on('click', '.js-item-toggle', event => {
       const id = getItemIdFromElement(event.currentTarget);
-      toggleCheckedForListItem(id);
+      const foundItem = store.items.find(item => item.id === id);
+      const updateData = {
+        checked: !foundItem.checked
+      };
+      api.updateItem(id, updateData)
+        .then(res => res.json())
+        .then((updatedItem) => {
+          store.findAndUpdate(updatedItem);
+        });   
       render();
     });
   }

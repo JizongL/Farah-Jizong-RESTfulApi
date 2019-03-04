@@ -13,6 +13,10 @@ const store = {
   searchTerm: '',
   addItem:function(item){
     this.items.push(item);
+  },
+  findAndUpdate: function(id, updateData){
+    const foundItem = this.items.find(item => item.id === id);
+    Object.assign(foundItem, updateData);
   }
 };
 
@@ -20,7 +24,7 @@ const store = {
 $(document).ready(function() {
   shoppingList.bindEventListeners();
   api.getItems()
-    .then(res => res.json())
+    .then(res => { res.json();} )
     .then((items) => {
       items.forEach((item) => store.addItem(item));
       shoppingList.render();
