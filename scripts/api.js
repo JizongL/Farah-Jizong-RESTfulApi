@@ -50,7 +50,7 @@ const api = (function () {
     };
 
     //return fetch(BASE_URL+'/items', option);
-   return listApiFetch(BASE_URL+'/items',option);
+    return listApiFetch(BASE_URL+'/items',option);
   };
 
   const updateItem = function(id, updateData){
@@ -62,7 +62,7 @@ const api = (function () {
       body: JSON.stringify(updateData)
     };
     //return fetch(BASE_URL+`/items/${id}`, option);
-    listApiFetch(BASE_URL+`/items/${id}`, option);
+    return listApiFetch(BASE_URL+`/items/${id}`, option);
   };
 
   const deleteItem = function(id){

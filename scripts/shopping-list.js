@@ -153,16 +153,17 @@ const shoppingList = (function(){
 
         //.then(res=> res.json())
         .then(() => {
-          
           store.findAndUpdate(id,updateData); 
         });
-      
-      
+       /* .catch(err => {
+          console.log('test BBBB',err.message);
+          addErrorToStoreAndRender(err.message);}); */
       //editListItemName(id, itemName);
       render();
     });
   }
-  
+     
+ 
   function handleToggleFilterClick() {
     $('.js-filter-checked').click(() => {
       toggleCheckedItemsFilter();
