@@ -26,12 +26,21 @@ const api = (function () {
   };
 
   const updateItem = function(id, updateData){
-
-  }
+    
+    const option = {
+      method: 'PATCH', 
+      headers: new Headers ({
+        'Content-type': 'application/json'
+      }),
+      body: JSON.stringify(updateData)
+    };
+    return fetch(BASE_URL+`/items/${id}`, option);
+  };
 
   return {
     getItems: getItems,
     createItem: createItem,
+    updateItem:updateItem
   };
 
 }());
