@@ -26,7 +26,6 @@ const api = (function () {
   };
 
   const updateItem = function(id, updateData){
-    
     const option = {
       method: 'PATCH', 
       headers: new Headers ({

@@ -108,11 +108,6 @@ const shoppingList = (function(){
     store.items.splice(index, 1);
   }
   
-  // function editListItemName(id, itemName) {
-  //   const item = store.items.find(item => item.id === id);
-  //   item.name = itemName;
-  // }
-  
   function toggleCheckedItemsFilter() {
     store.hideCheckedItems = !store.hideCheckedItems;
   }
@@ -139,9 +134,17 @@ const shoppingList = (function(){
       event.preventDefault();
       const id = getItemIdFromElement(event.currentTarget);
       const itemName = $(event.currentTarget).find('.shopping-item').val();
-      api.updateItem(id,{name:itemName})
-        .then(res=> res.json())
-        .then(data => store.findAndUpdate(id,data));
+      
+      const updateData = {
+        name: itemName
+      };
+      api.updateItem(id, updateData)
+
+        .then(res=> console.log('testing res json' + res.json()))
+        /*.then((data) => {
+          console.log('testing' + (Object.keys(data)));
+          store.findAndUpdate(id,data); 
+    }); */
       
       
       //editListItemName(id, itemName);
