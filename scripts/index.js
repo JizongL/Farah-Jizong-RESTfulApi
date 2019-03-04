@@ -11,6 +11,7 @@ const store = {
   ],
   hideCheckedItems: false,
   searchTerm: '',
+  error:'',
   addItem:function(item){
     this.items.push(item);
   },
@@ -30,14 +31,23 @@ const store = {
   }
 };
 
+function addDataToStoreAndRender(items){
+  
+  items.forEach((item) => store.addItem(item));
+  shoppingList.render();
+}
+
+function addErrorToStoreAndRender(error){
+  store.error = error;
+  shoppingList.render();
+}
 
 $(document).ready(function() {
   shoppingList.bindEventListeners();
   api.getItems()
-    .then(res =>  res.json())
-    .then((items) => {
-      items.forEach((item) => store.addItem(item));
-      shoppingList.render();
-    });
-  shoppingList.render();
+    
+    
+    .then(data => addDataToStoreAndRender(data))
+    .catch(err => addErrorToStoreAndRender(err.message));
+  
 });
