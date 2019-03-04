@@ -25,6 +25,10 @@ const api = (function () {
     return fetch(BASE_URL+'/items', option);
   };
 
+  const updateItem = function(id, updateData){
+
+  }
+
   return {
     getItems: getItems,
     createItem: createItem,
