@@ -20,6 +20,13 @@ const store = {
     console.log('test foundItem and updateData',updateData, id);
     console.log('test store.items after object.assign',store.items);
     shoppingList.render();
+  },
+  deleteItem: function(id){
+    const deleteItemIndex = this.items.findIndex(item => item.id === id);
+    console.log('testing index' + deleteItemIndex + ' ' + id + ' ');
+    console.log('testing store object' + store.items[deleteItemIndex].id);
+    store.items.slice(deleteItemIndex, 1);
+    shoppingList.render();
   }
 };
 

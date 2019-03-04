@@ -56,9 +56,9 @@ const shoppingList = (function(){
   }
   
   
-//  function addItemToShoppingList(itemName) {
-//     store.items.push({ id: cuid(), name: itemName, checked: false });
-//   } 
+  //  function addItemToShoppingList(itemName) {
+  //     store.items.push({ id: cuid(), name: itemName, checked: false });
+  //   } 
   
   function handleNewItemSubmit() {
     $('#js-shopping-list-form').submit(function (event) {
@@ -103,10 +103,7 @@ const shoppingList = (function(){
     });
   }
   
-  function deleteListItem(id) {
-    const index = store.items.findIndex(item => item.id === id);
-    store.items.splice(index, 1);
-  }
+ 
   
   function toggleCheckedItemsFilter() {
     store.hideCheckedItems = !store.hideCheckedItems;
@@ -122,10 +119,10 @@ const shoppingList = (function(){
     $('.js-shopping-list').on('click', '.js-item-delete', event => {
       // get the index of the item in store.items
       const id = getItemIdFromElement(event.currentTarget);
-      // delete the item
-      deleteListItem(id);
-      // render the updated shopping list
-      render();
+      
+      api.deleteItem(id)
+        .then(() => store.deleteItem(id));
+        
     });
   }
   
