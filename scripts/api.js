@@ -9,7 +9,7 @@ const api = (function () {
     return fetch(BASE_URL+'/items');
   };
 
-  const createItem = function(){
+  const createItem = function(name){
     const newItem = JSON.stringify({
       name: name,
     });
@@ -22,15 +22,12 @@ const api = (function () {
       body: newItem
     };
 
-    fetch(BASE_URL+'/items', option);
+    return fetch(BASE_URL+'/items', option);
   };
-
-
 
   return {
     getItems: getItems,
-    createItem
+    createItem: createItem,
   };
 
 }());
-
