@@ -25,7 +25,7 @@ const store = {
     const deleteItemIndex = this.items.findIndex(item => item.id === id);
     console.log('testing index' + deleteItemIndex + ' ' + id + ' ');
     console.log('testing store object' + store.items[deleteItemIndex].id);
-    store.items.slice(deleteItemIndex, 1);
+    store.items.splice(deleteItemIndex, 1);
     shoppingList.render();
   }
 };
