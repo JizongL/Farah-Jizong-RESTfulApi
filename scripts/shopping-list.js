@@ -1,5 +1,5 @@
 'use strict';
-/* global store, cuid, $ */
+/* global store, cuid, $, api */
 
 // eslint-disable-next-line no-unused-vars
 const shoppingList = (function(){
@@ -56,17 +56,22 @@ const shoppingList = (function(){
   }
   
   
-  function addItemToShoppingList(itemName) {
+ function addItemToShoppingList(itemName) {
     store.items.push({ id: cuid(), name: itemName, checked: false });
-  }
+  } 
   
   function handleNewItemSubmit() {
     $('#js-shopping-list-form').submit(function (event) {
       event.preventDefault();
+
       const newItemName = $('.js-shopping-list-entry').val();
       $('.js-shopping-list-entry').val('');
-      addItemToShoppingList(newItemName);
-      render();
+      api.createItem(newItemName)
+        .then(res => res.json())
+        .then((newItem) => {
+          store.addItem(newItem);
+          render();
+        });
     });
   }
   
