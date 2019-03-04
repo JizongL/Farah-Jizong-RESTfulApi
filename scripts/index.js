@@ -10,21 +10,22 @@ const store = {
     { id: cuid(), name: 'bread', checked: false }
   ],
   hideCheckedItems: false,
-  searchTerm: ''
+  searchTerm: '',
+  addItem:function(item){
+    this.items.push(item);
+  }
 };
 
-api.createItem('pears')
-  .then(res => res.json())
-  .then((newItem) => {
-    return api.getItems();
-  })
-  .then(res => res.json())
-  .then(((items) => {
-    console.log(items);
-  }));
+
 
 
 $(document).ready(function() {
   shoppingList.bindEventListeners();
+  api.getItems()
+    .then(res => res.json())
+    .then((items) => {
+      items.forEach((item) => store.addItem(item));
+      shoppingList.render();
+    });
   shoppingList.render();
 });
