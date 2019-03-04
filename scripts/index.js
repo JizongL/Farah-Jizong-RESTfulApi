@@ -1,4 +1,5 @@
-/* global shoppingList, cuid */
+'use strict';
+/* global shoppingList, cuid, $, api */
 
 // eslint-disable-next-line no-unused-vars
 const store = {
@@ -11,6 +12,10 @@ const store = {
   hideCheckedItems: false,
   searchTerm: ''
 };
+
+api.getItems()
+  .then(res => console.log(res));
+console.log(api.BASE_URL);
 
 $(document).ready(function() {
   shoppingList.bindEventListeners();
