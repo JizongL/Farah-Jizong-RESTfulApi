@@ -140,11 +140,11 @@ const shoppingList = (function(){
       };
       api.updateItem(id, updateData)
 
-        .then(res=> console.log('testing res json' + res.json()))
-        /*.then((data) => {
-          console.log('testing' + (Object.keys(data)));
-          store.findAndUpdate(id,data); 
-    }); */
+        .then(res=> res.json())
+        .then(() => {
+          
+          store.findAndUpdate(id,updateData); 
+        });
       
       
       //editListItemName(id, itemName);
