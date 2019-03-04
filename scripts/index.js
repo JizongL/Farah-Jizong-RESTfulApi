@@ -13,9 +13,14 @@ const store = {
   searchTerm: ''
 };
 
+
+  
+
 api.getItems()
-  .then(res => console.log(res));
-console.log(api.BASE_URL);
+  .then(res=>res.json())
+  .then(res=> console.log(res));
+  
+    
 
 $(document).ready(function() {
   shoppingList.bindEventListeners();
