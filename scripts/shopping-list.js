@@ -42,6 +42,13 @@ const shoppingList = (function(){
     shoppingList.render();
   }
 
+  function addDataToStoreAndRender(items){
+  
+
+    items.forEach((item) => store.addItem(item));
+    shoppingList.render();
+  }
+
   function render() {
     // Filter item list if store prop is true by item.checked === false
     let items = [ ...store.items ];
@@ -55,7 +62,7 @@ const shoppingList = (function(){
     }
     
     if(store.error){
-      $('.error-message').html(store.error);
+      $('.error-message').html(`${store.error}<button type="button" id="error-button"> Clear error message</button>`);
     }
     // render the shopping list in the DOM
     console.log('`render` ran');
@@ -154,12 +161,13 @@ const shoppingList = (function(){
         //.then(res=> res.json())
         .then(() => {
           store.findAndUpdate(id,updateData); 
-        });
-       /* .catch(err => {
-          console.log('test BBBB',err.message);
-          addErrorToStoreAndRender(err.message);}); */
+          render();
+        })
+        .catch(err => {
+          console.log('test AAA',err.message);
+          addErrorToStoreAndRender(err.message);});
       //editListItemName(id, itemName);
-      render();
+      
     });
   }
      
@@ -178,6 +186,16 @@ const shoppingList = (function(){
       render();
     });
   }
+
+  function handleClearError(){
+    $('.error-message').on('click','#error-button', event => {
+      event.preventDefault();
+      console.log('clear button clicked');
+      store.error = null;
+      addDataToStoreAndRender();
+
+    });
+  } 
   
   function bindEventListeners() {
     handleNewItemSubmit();
@@ -187,6 +205,8 @@ const shoppingList = (function(){
     handleToggleFilterClick();
     handleShoppingListSearch();
     addErrorToStoreAndRender();
+    handleClearError();
+    addDataToStoreAndRender();
   }
 
   // This object contains the only exposed methods from this module:
