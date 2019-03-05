@@ -42,14 +42,15 @@ const shoppingList = (function(){
     shoppingList.render();
   }
 
-  function addDataToStoreAndRender(items){
+ /* function addDataToStoreAndRender(items){
   
 
     items.forEach((item) => store.addItem(item));
     shoppingList.render();
-  }
+  } */
 
   function render() {
+    $('.error-message').empty();
     // Filter item list if store prop is true by item.checked === false
     let items = [ ...store.items ];
     if (store.hideCheckedItems) {
@@ -189,10 +190,9 @@ const shoppingList = (function(){
 
   function handleClearError(){
     $('.error-message').on('click','#error-button', event => {
-      event.preventDefault();
       console.log('clear button clicked');
       store.error = null;
-      addDataToStoreAndRender();
+      render();
 
     });
   } 
@@ -206,7 +206,6 @@ const shoppingList = (function(){
     handleShoppingListSearch();
     addErrorToStoreAndRender();
     handleClearError();
-    addDataToStoreAndRender();
   }
 
   // This object contains the only exposed methods from this module:
